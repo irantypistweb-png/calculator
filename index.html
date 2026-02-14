@@ -11,45 +11,54 @@
     <style>
         /* --- بخش اول: CSS --- */
         
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: transparent; /* برای نمایش بهتر در iframe */
+        }
+
         #bpc_container {
             font-family: 'Vazirmatn', sans-serif;
             background-color: #f9f9f9;
-            padding: 25px;
+            padding: 20px;
             border: 1px solid #cccccc;
-            max-width: 900px; /* افزایش عرض برای چیدمان دو ستونه */
-            margin: 20px auto;
+            max-width: 850px; 
+            margin: 10px auto;
             direction: rtl;
             text-align: right;
             border-radius: 15px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             color: #333;
+            box-sizing: border-box;
         }
 
         #bpc_container h1 {
-            margin: 0 0 15px 0;
+            margin: 0 0 10px 0;
             text-align: center;
             font-weight: bold;
             color: #901d9b;
-            font-size: 24px;
+            font-size: 22px;
         }
 
         #bpc_container .description {
             color: #666;
-            line-height: 1.6;
+            line-height: 1.5;
             margin-bottom: 20px;
             text-align: center;
-            font-size: 13px;
+            font-size: 12px;
         }
 
-        /* چیدمان شبکه‌ای (Grid) برای دو ستونه کردن فرم */
+        /* اجبار به دو ستونه ماندن در تمام سایزها */
         .bpc-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr); /* دقیقاً دو ستون مساوی */
+            gap: 15px;
         }
 
         .bpc-field {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            display: flex;
+            flex-direction: column;
         }
 
         /* فیلد تمام عرض برای بخش مجوزها */
@@ -59,26 +68,34 @@
 
         #bpc_container .label-text {
             font-weight: bold;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: block;
-            font-size: 14px;
+            font-size: 13px;
+            white-space: nowrap; /* جلوگیری از شکستن متن لیبل */
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         #bpc_container select {
             width: 100%;
             font-family: 'Vazirmatn', sans-serif;
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
             border: 1px solid #ccc;
             background-color: #fff;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
             box-sizing: border-box;
+            outline: none;
+        }
+
+        #bpc_container select:focus {
+            border-color: #901d9b;
         }
 
         #bpc_container #bpc_result {
-            margin-top: 25px;
-            padding: 20px;
+            margin-top: 20px;
+            padding: 15px;
             border: 2px dashed #901d9b;
             background-color: #ffffff;
             text-align: center;
@@ -86,42 +103,40 @@
         }
 
         #bpc_container .total-price {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
             color: #901d9b;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
         #bpc_container .unit-price {
-            font-size: 13px;
+            font-size: 12px;
             color: #666;
         }
 
         #bpc_container .promo-badge {
-            margin-top: 15px;
+            margin-top: 10px;
             background-color: #eccafa;
-            padding: 10px 20px;
+            padding: 8px 15px;
             color: #843fa1;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
             border-radius: 8px;
             display: inline-block;
         }
 
-        /* ریسپانسیو برای موبایل */
-        @media (max-width: 768px) {
-            .bpc-grid {
-                grid-template-columns: 1fr;
-            }
-            .full-width {
-                grid-column: span 1;
-            }
+        /* تنظیمات اختصاصی برای موبایل‌های خیلی کوچک */
+        @media (max-width: 400px) {
+            #bpc_container { padding: 10px; }
+            .bpc-grid { gap: 8px; }
+            #bpc_container .label-text { font-size: 11px; }
+            #bpc_container select { padding: 8px; font-size: 11px; }
+            #bpc_container h1 { font-size: 18px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- --- بخش دوم: HTML --- -->
     <div id="bpc_container">
         <h1>محاسبه هزینه چاپ کتاب آنلاین</h1>
 
@@ -131,7 +146,6 @@
 
         <form id="bpc_form">
             <div class="bpc-grid">
-                <!-- ستون اول -->
                 <div class="bpc-field">
                     <span class="label-text">نوع چاپ کتاب</span>
                     <select id="bpc_printType" onchange="bpc_run_calc()">
@@ -140,7 +154,6 @@
                     </select>
                 </div>
 
-                <!-- ستون دوم -->
                 <div class="bpc-field">
                     <span class="label-text">قطع چاپ کتاب</span>
                     <select id="bpc_size" onchange="bpc_run_calc()">
@@ -166,7 +179,7 @@
                 </div>
 
                 <div class="bpc-field">
-                    <span class="label-text">تیراژ کتاب (تعداد جلد)</span>
+                    <span class="label-text">تیراژ کتاب (جلد)</span>
                     <select id="bpc_copies" onchange="bpc_run_calc()">
                         <option value="10" selected>10 جلد</option>
                         <option value="20">20 جلد</option>
@@ -187,7 +200,7 @@
                 </div>
 
                 <div class="bpc-field">
-                    <span class="label-text">هزینه ویراستاری کتاب</span>
+                    <span class="label-text">ویراستاری کتاب</span>
                     <select id="bpc_editing" onchange="bpc_run_calc()">
                         <option value="no" selected>خیر</option>
                         <option value="yes">بلی (طبق تعرفه)</option>
@@ -195,7 +208,7 @@
                 </div>
 
                 <div class="bpc-field">
-                    <span class="label-text">هزینه طراحی جلد کتاب</span>
+                    <span class="label-text">طراحی جلد کتاب</span>
                     <select id="bpc_coverDesign" onchange="bpc_run_calc()">
                         <option value="yes" selected>بلی (طراحی حرفه‌ای)</option>
                         <option value="no">خیر (دارم)</option>
@@ -203,16 +216,15 @@
                 </div>
 
                 <div class="bpc-field">
-                    <span class="label-text">هزینه صفحه‌آرایی کتاب</span>
+                    <span class="label-text">صفحه‌آرایی کتاب</span>
                     <select id="bpc_layout" onchange="bpc_run_calc()">
                         <option value="yes" selected>بلی</option>
                         <option value="no">خیر</option>
                     </select>
                 </div>
 
-                <!-- ردیف تمام عرض -->
                 <div class="bpc-field full-width">
-                    <span class="label-text">هزینه اخذ مجوز چاپ و نشر کتاب (ارشاد/فیپا)</span>
+                    <span class="label-text">هزینه اخذ مجوز (ارشاد/فیپا)</span>
                     <select id="bpc_permit" onchange="bpc_run_calc()">
                         <option value="yes" selected>بلی (اخذ تمامی مجوزها)</option>
                         <option value="no">خیر</option>
@@ -223,10 +235,10 @@
 
         <div id="bpc_result">
             <div class="total-price">
-                هزینه نهایی چاپ کتاب: <span id="bpc_total_price">0</span> تومان
+                هزینه نهایی: <span id="bpc_total_price">0</span> تومان
             </div>
             <div class="unit-price">
-                قیمت تمام شده هر جلد: <span id="bpc_unit_price">0</span> تومان
+                قیمت هر جلد: <span id="bpc_unit_price">0</span> تومان
             </div>
             <div class="promo-badge">
                 ارزانترین قیمت چاپ کتاب در ایران تایپیست
@@ -236,15 +248,6 @@
 
     <!-- --- بخش سوم: JS --- -->
     <script>
-        function bpc_update_font() {
-            var title = document.querySelector("#bpc_container h1");
-            if(title) {
-                title.style.fontSize = "6vw";
-                if(window.innerWidth > 900) title.style.fontSize = "32px";
-                if(window.innerWidth < 480) title.style.fontSize = "22px";
-            }
-        }
-
         function bpc_run_calc() {
             try {
                 var pgs = parseInt(document.getElementById('bpc_pages').value) || 0;
@@ -284,12 +287,7 @@
             }
         }
 
-        window.onload = function() {
-            bpc_update_font();
-            bpc_run_calc();
-        };
-
-        window.addEventListener('resize', bpc_update_font);
+        window.onload = bpc_run_calc;
     </script>
 </body>
 </html>
