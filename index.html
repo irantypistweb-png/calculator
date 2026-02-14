@@ -11,27 +11,35 @@
     <style>
         /* --- بخش اول: CSS --- */
         
-        body {
-            margin: 0;
-            padding: 0;
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
             background-color: transparent; 
+            height: auto !important;
+            min-height: 0 !important;
+        }
+
+        body {
             overflow: hidden; /* جلوگیری از اسکرول بدنه اصلی */
+            display: flex;
+            flex-direction: column;
         }
 
         #bpc_container {
             font-family: 'Vazirmatn', sans-serif;
             background-color: #f9f9f9;
-            padding: 10px; /* کاهش پدینگ برای صرفه‌جویی در فضا */
+            padding: 10px;
             border: 1px solid #cccccc;
             max-width: 100%; 
-            margin: 0 auto;
+            margin: 0; /* حذف کامل مارجین خارجی */
             direction: rtl;
             text-align: right;
             border-radius: 15px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             color: #333;
             box-sizing: border-box;
-            height: auto;
+            height: fit-content;
+            display: block;
         }
 
         #bpc_container h1 {
@@ -50,7 +58,6 @@
             font-size: 10px;
         }
 
-        /* اجبار به دو ستونه ماندن در تمام سایزها */
         .bpc-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -124,13 +131,16 @@
 
         /* تنظیمات خاص برای حذف فواصل اضافی در موبایل */
         @media (max-width: 480px) {
-            #bpc_container { padding: 8px; }
-            #bpc_container h1 { font-size: 16px; margin-bottom: 3px; }
-            #bpc_container .description { margin-bottom: 8px; }
-            #bpc_container .bpc-grid { gap: 6px; }
-            #bpc_container #bpc_result { margin-top: 8px; padding: 6px; }
-            #bpc_container .promo-badge { margin-top: 4px; }
-            form { margin-bottom: 0; }
+            #bpc_container { 
+                padding: 6px; 
+                border-radius: 10px;
+            }
+            #bpc_container h1 { font-size: 16px; margin-bottom: 2px; }
+            #bpc_container .description { margin-bottom: 6px; }
+            #bpc_container .bpc-grid { gap: 4px; }
+            #bpc_container #bpc_result { margin-top: 6px; padding: 4px; }
+            #bpc_container .promo-badge { margin-top: 2px; }
+            #bpc_form { margin-bottom: 0; }
         }
     </style>
 </head>
