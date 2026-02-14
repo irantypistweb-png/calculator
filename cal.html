@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>?????? ????? ??? ????</title>
+    <title>محاسبه هزینه چاپ کتاب</title>
     
-    <!-- ???? ???? ???? ????? ???? ????? ? ???? ????? -->
+    <!-- فونت وزیر برای نمایش صحیح اعداد و متون فارسی -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
 
     <style>
-        /* --- ??? ???: CSS --- */
+        /* --- بخش اول: CSS --- */
         
         #bpc_container {
             font-family: 'Vazirmatn', sans-serif;
             background-color: #f9f9f9;
             padding: 25px;
             border: 1px solid #cccccc;
-            max-width: 900px; /* ?????? ??? ???? ?????? ?? ????? */
+            max-width: 900px; /* افزایش عرض برای چیدمان دو ستونه */
             margin: 20px auto;
             direction: rtl;
             text-align: right;
@@ -41,7 +41,7 @@
             font-size: 13px;
         }
 
-        /* ?????? ??????? (Grid) ???? ?? ????? ???? ??? */
+        /* چیدمان شبکه‌ای (Grid) برای دو ستونه کردن فرم */
         .bpc-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -52,7 +52,7 @@
             margin-bottom: 10px;
         }
 
-        /* ???? ???? ??? ???? ??? ?????? */
+        /* فیلد تمام عرض برای بخش مجوزها */
         .full-width {
             grid-column: span 2;
         }
@@ -108,7 +108,7 @@
             display: inline-block;
         }
 
-        /* ????????? ???? ?????? */
+        /* ریسپانسیو برای موبایل */
         @media (max-width: 768px) {
             .bpc-grid {
                 grid-template-columns: 1fr;
@@ -121,101 +121,101 @@
 </head>
 <body>
 
-    <!-- --- ??? ???: HTML --- -->
+    <!-- --- بخش دوم: HTML --- -->
     <div id="bpc_container">
-        <h1>?????? ????? ??? ???? ??????</h1>
+        <h1>محاسبه هزینه چاپ کتاب آنلاین</h1>
 
         <div class="description">
-            ?????? ???? ??? ???? ?? ???? ????? ????? ? ????? ???? ???. ????? ??????? ?? ????? ???????.
+            برآورد قیمت چاپ کتاب بر اساس تعداد صفحات و تیراژ مشخص شده. تمامی قیمت‌ها به تومان می‌باشد.
         </div>
 
         <form id="bpc_form">
             <div class="bpc-grid">
-                <!-- ???? ??? -->
+                <!-- ستون اول -->
                 <div class="bpc-field">
-                    <span class="label-text">??? ??? ????</span>
+                    <span class="label-text">نوع چاپ کتاب</span>
                     <select id="bpc_printType" onchange="bpc_run_calc()">
-                        <option value="bw" selected>???? ? ????</option>
-                        <option value="color">???? (???????)</option>
+                        <option value="bw" selected>سیاه و سفید</option>
+                        <option value="color">رنگی (دیجیتال)</option>
                     </select>
                 </div>
 
-                <!-- ???? ??? -->
+                <!-- ستون دوم -->
                 <div class="bpc-field">
-                    <span class="label-text">??? ??? ????</span>
+                    <span class="label-text">قطع چاپ کتاب</span>
                     <select id="bpc_size" onchange="bpc_run_calc()">
-                        <option value="vaziri" selected>?????</option>
-                        <option value="raghi">????</option>
-                        <option value="rahli">???? (A4)</option>
-                        <option value="kheshti">????</option>
-                        <option value="jibi">????</option>
+                        <option value="vaziri" selected>وزیری</option>
+                        <option value="raghi">رقعی</option>
+                        <option value="rahli">رحلی (A4)</option>
+                        <option value="kheshti">خشتی</option>
+                        <option value="jibi">جیبی</option>
                     </select>
                 </div>
 
                 <div class="bpc-field">
-                    <span class="label-text">????? ????? ????</span>
+                    <span class="label-text">تعداد صفحات کتاب</span>
                     <select id="bpc_pages" onchange="bpc_run_calc()">
-                        <option value="60">60 ????</option>
-                        <option value="100" selected>100 ????</option>
-                        <option value="150">150 ????</option>
-                        <option value="200">200 ????</option>
-                        <option value="300">300 ????</option>
-                        <option value="400">400 ????</option>
-                        <option value="500">500 ????</option>
+                        <option value="60">60 صفحه</option>
+                        <option value="100" selected>100 صفحه</option>
+                        <option value="150">150 صفحه</option>
+                        <option value="200">200 صفحه</option>
+                        <option value="300">300 صفحه</option>
+                        <option value="400">400 صفحه</option>
+                        <option value="500">500 صفحه</option>
                     </select>
                 </div>
 
                 <div class="bpc-field">
-                    <span class="label-text">????? ???? (????? ???)</span>
+                    <span class="label-text">تیراژ کتاب (تعداد جلد)</span>
                     <select id="bpc_copies" onchange="bpc_run_calc()">
-                        <option value="10" selected>10 ???</option>
-                        <option value="20">20 ???</option>
-                        <option value="50">50 ???</option>
-                        <option value="100">100 ???</option>
-                        <option value="200">200 ???</option>
-                        <option value="500">500 ???</option>
-                        <option value="1000">1000 ???</option>
+                        <option value="10" selected>10 جلد</option>
+                        <option value="20">20 جلد</option>
+                        <option value="50">50 جلد</option>
+                        <option value="100">100 جلد</option>
+                        <option value="200">200 جلد</option>
+                        <option value="500">500 جلد</option>
+                        <option value="1000">1000 جلد</option>
                     </select>
                 </div>
 
                 <div class="bpc-field">
-                    <span class="label-text">??? ??? ????</span>
+                    <span class="label-text">نوع جلد کتاب</span>
                     <select id="bpc_cover" onchange="bpc_run_calc()">
-                        <option value="soft" selected>????? (???)</option>
-                        <option value="hard">??? ??? (????????)</option>
+                        <option value="soft" selected>شومیز (نرم)</option>
+                        <option value="hard">جلد سخت (گالینگور)</option>
                     </select>
                 </div>
 
                 <div class="bpc-field">
-                    <span class="label-text">????? ????????? ????</span>
+                    <span class="label-text">هزینه ویراستاری کتاب</span>
                     <select id="bpc_editing" onchange="bpc_run_calc()">
-                        <option value="no" selected>???</option>
-                        <option value="yes">??? (??? ?????)</option>
+                        <option value="no" selected>خیر</option>
+                        <option value="yes">بلی (طبق تعرفه)</option>
                     </select>
                 </div>
 
                 <div class="bpc-field">
-                    <span class="label-text">????? ????? ??? ????</span>
+                    <span class="label-text">هزینه طراحی جلد کتاب</span>
                     <select id="bpc_coverDesign" onchange="bpc_run_calc()">
-                        <option value="yes" selected>??? (????? ???????)</option>
-                        <option value="no">??? (????)</option>
+                        <option value="yes" selected>بلی (طراحی حرفه‌ای)</option>
+                        <option value="no">خیر (دارم)</option>
                     </select>
                 </div>
 
                 <div class="bpc-field">
-                    <span class="label-text">????? ?????????? ????</span>
+                    <span class="label-text">هزینه صفحه‌آرایی کتاب</span>
                     <select id="bpc_layout" onchange="bpc_run_calc()">
-                        <option value="yes" selected>???</option>
-                        <option value="no">???</option>
+                        <option value="yes" selected>بلی</option>
+                        <option value="no">خیر</option>
                     </select>
                 </div>
 
-                <!-- ???? ???? ??? -->
+                <!-- ردیف تمام عرض -->
                 <div class="bpc-field full-width">
-                    <span class="label-text">????? ??? ???? ??? ? ??? ???? (?????/????)</span>
+                    <span class="label-text">هزینه اخذ مجوز چاپ و نشر کتاب (ارشاد/فیپا)</span>
                     <select id="bpc_permit" onchange="bpc_run_calc()">
-                        <option value="yes" selected>??? (??? ????? ??????)</option>
-                        <option value="no">???</option>
+                        <option value="yes" selected>بلی (اخذ تمامی مجوزها)</option>
+                        <option value="no">خیر</option>
                     </select>
                 </div>
             </div>
@@ -223,18 +223,18 @@
 
         <div id="bpc_result">
             <div class="total-price">
-                ????? ????? ??? ????: <span id="bpc_total_price">0</span> ?????
+                هزینه نهایی چاپ کتاب: <span id="bpc_total_price">0</span> تومان
             </div>
             <div class="unit-price">
-                ???? ???? ??? ?? ???: <span id="bpc_unit_price">0</span> ?????
+                قیمت تمام شده هر جلد: <span id="bpc_unit_price">0</span> تومان
             </div>
             <div class="promo-badge">
-                ????????? ???? ??? ???? ?? ????? ???????
+                ارزانترین قیمت چاپ کتاب در ایران تایپیست
             </div>
         </div>
     </div>
 
-    <!-- --- ??? ???: JS --- -->
+    <!-- --- بخش سوم: JS --- -->
     <script>
         function bpc_update_font() {
             var title = document.querySelector("#bpc_container h1");
